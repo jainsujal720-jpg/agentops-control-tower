@@ -1,0 +1,396 @@
+{
+  "dataset_version": "0.2.0",
+  "synthetic": true,
+  "disclaimer": "All organizations, suppliers, contract clauses, policies, and outcomes in this dataset are fictional and created for prototype testing. The labels are designed test expectations, not legal advice or real procurement policy. Case C07 is an additional fictional excerpt designed to test evidence-status distinctions; it is not a real contract or legal advice.",
+  "cases": [
+    {
+      "case_id": "C01",
+      "title": "Compliant baseline",
+      "scenario_type": "compliant",
+      "description": "All supplied contract terms satisfy the applicable standard policy.",
+      "policy_document_ids": [
+        "POL-STANDARD-1.0"
+      ],
+      "contract": {
+        "supplier": "Northstar Office Systems",
+        "signed_on": "2026-05-10",
+        "clauses": [
+          {
+            "clause_id": "C01-01",
+            "topic": "Payment terms",
+            "text": "Invoices are payable within 30 days after receipt of a valid invoice."
+          },
+          {
+            "clause_id": "C01-02",
+            "topic": "Liability cap",
+            "text": "The supplier's aggregate liability is capped at fees paid or payable during the 12 months before the event giving rise to the claim."
+          },
+          {
+            "clause_id": "C01-03",
+            "topic": "Personal data processing",
+            "text": "The supplier will process customer personal data only to provide the contracted service. The parties attach and sign the Data Processing Addendum before access begins."
+          },
+          {
+            "clause_id": "C01-04",
+            "topic": "Security incident notice",
+            "text": "The supplier will notify the company of a confirmed security incident affecting company or customer data within 48 hours of discovery."
+          },
+          {
+            "clause_id": "C01-05",
+            "topic": "Renewal",
+            "text": "The initial term is 12 months. Each renewal term is 12 months, and the company may opt out by giving at least 60 days' notice."
+          }
+        ]
+      },
+      "expected": {
+        "disposition": "approve",
+        "requires_escalation": false,
+        "findings": [],
+        "rationale": "The supplied terms meet the requirements in the supplied standard policy. The agent should not invent a conflict. A person still makes the final procurement decision."
+      }
+    },
+    {
+      "case_id": "C02",
+      "title": "Negotiable payment term",
+      "scenario_type": "negotiable_term",
+      "description": "Payment is net 45, which the standard policy permits only with prior written manager approval.",
+      "policy_document_ids": [
+        "POL-STANDARD-1.0"
+      ],
+      "contract": {
+        "supplier": "Mapleline Workplace Services",
+        "signed_on": "2026-05-12",
+        "clauses": [
+          {
+            "clause_id": "C02-01",
+            "topic": "Payment terms",
+            "text": "Invoices are payable within 45 days after receipt of a valid invoice."
+          },
+          {
+            "clause_id": "C02-02",
+            "topic": "Liability cap",
+            "text": "The supplier's aggregate liability is capped at fees paid or payable during the 12 months before the event giving rise to the claim."
+          }
+        ]
+      },
+      "expected": {
+        "disposition": "negotiate",
+        "requires_escalation": false,
+        "findings": [
+          {
+            "finding_id": "C02-F01",
+            "issue_type": "payment_terms_above_preferred",
+            "severity": "medium",
+            "expected_action": "negotiate",
+            "contract_clause_ids": [
+              "C02-01"
+            ],
+            "policy_clause_ids": [
+              "STD-PAYMENT-01"
+            ],
+            "rationale": "Net 45 is allowed only after written Procurement Manager approval. Recommend obtaining that approval or negotiating to net 30.",
+            "evidence_status": "requirement_not_established"
+          }
+        ],
+        "rationale": "A permitted exception exists, so the agent should recommend negotiation or approval instead of labeling the term a mandatory violation."
+      }
+    },
+    {
+      "case_id": "C03",
+      "title": "Critical liability cap conflict",
+      "scenario_type": "mandatory_policy_conflict",
+      "description": "The liability cap covers only three months of fees, below the policy minimum of 12 months.",
+      "policy_document_ids": [
+        "POL-STANDARD-1.0"
+      ],
+      "contract": {
+        "supplier": "Redwood Data Hosting",
+        "signed_on": "2026-05-15",
+        "clauses": [
+          {
+            "clause_id": "C03-01",
+            "topic": "Liability cap",
+            "text": "The supplier's aggregate liability is capped at fees paid or payable during the three months before the event giving rise to the claim."
+          },
+          {
+            "clause_id": "C03-02",
+            "topic": "Payment terms",
+            "text": "Invoices are payable within 30 days after receipt of a valid invoice."
+          }
+        ]
+      },
+      "expected": {
+        "disposition": "escalate",
+        "requires_escalation": true,
+        "findings": [
+          {
+            "finding_id": "C03-F01",
+            "issue_type": "liability_cap_below_policy_minimum",
+            "severity": "critical",
+            "expected_action": "escalate",
+            "contract_clause_ids": [
+              "C03-01"
+            ],
+            "policy_clause_ids": [
+              "STD-LIABILITY-01"
+            ],
+            "rationale": "The contract uses a three-month cap while policy requires at least 12 months. Route to a human risk owner; do not recommend approval.",
+            "evidence_status": "confirmed_conflict"
+          }
+        ],
+        "rationale": "The term directly misses a mandatory critical threshold."
+      }
+    },
+    {
+      "case_id": "C04",
+      "title": "Required data addendum missing",
+      "scenario_type": "missing_clause",
+      "description": "The supplier will handle customer personal data, but the contract does not include a signed data processing addendum.",
+      "policy_document_ids": [
+        "POL-STANDARD-1.0"
+      ],
+      "contract": {
+        "supplier": "Cedarfield Customer Support",
+        "signed_on": "2026-05-18",
+        "clauses": [
+          {
+            "clause_id": "C04-01",
+            "topic": "Personal data processing",
+            "text": "The supplier will process customer personal data while providing hosted support services."
+          },
+          {
+            "clause_id": "C04-02",
+            "topic": "Supplier obligations",
+            "text": "The supplier will use customer data only to provide the hosted support service."
+          },
+          {
+            "clause_id": "C04-03",
+            "topic": "Payment terms",
+            "text": "Invoices are payable within 30 days after receipt of a valid invoice."
+          },
+          {
+            "clause_id": "C04-04",
+            "topic": "Liability cap",
+            "text": "The supplier's aggregate liability is capped at fees paid or payable during the 12 months before the event giving rise to the claim."
+          },
+          {
+            "clause_id": "C04-05",
+            "topic": "Security incident notice",
+            "text": "The supplier will notify the company of a confirmed security incident affecting customer data within 48 hours of discovery."
+          }
+        ]
+      },
+      "expected": {
+        "disposition": "escalate",
+        "requires_escalation": true,
+        "findings": [
+          {
+            "finding_id": "C04-F01",
+            "issue_type": "required_data_addendum_not_found",
+            "severity": "high",
+            "expected_action": "escalate",
+            "contract_clause_ids": [
+              "C04-01"
+            ],
+            "policy_clause_ids": [
+              "STD-DPA-01"
+            ],
+            "rationale": "The contract says personal data will be processed, activating the policy requirement. No signed Data Processing Addendum appears among the supplied contract clauses. State that it was not found; do not invent a clause.",
+            "evidence_status": "missing_from_supplied_text"
+          }
+        ],
+        "rationale": "The evidence triggers a required document check, and the required document is absent from the provided contract text."
+      }
+    },
+    {
+      "case_id": "C05",
+      "title": "Conflicting active payment policies",
+      "scenario_type": "conflicting_policy_sources",
+      "description": "Two active policy documents disagree about whether net 45 can be allowed for a supplier processing customer data, and neither states precedence.",
+      "policy_document_ids": [
+        "POL-STANDARD-1.0",
+        "POL-FINANCE-DATA-2.0"
+      ],
+      "contract": {
+        "supplier": "Harborlight Analytics",
+        "signed_on": "2026-05-20",
+        "clauses": [
+          {
+            "clause_id": "C05-01",
+            "topic": "Payment terms",
+            "text": "Invoices are payable within 45 days after receipt of a valid invoice."
+          },
+          {
+            "clause_id": "C05-02",
+            "topic": "Personal data processing",
+            "text": "The supplier will process customer personal data to provide analytics services."
+          },
+          {
+            "clause_id": "C05-03",
+            "topic": "Data Processing Addendum",
+            "text": "The parties attach and sign the Data Processing Addendum before data access begins."
+          },
+          {
+            "clause_id": "C05-04",
+            "topic": "Liability cap",
+            "text": "The supplier's aggregate liability is capped at fees paid or payable during the 12 months before the event giving rise to the claim."
+          },
+          {
+            "clause_id": "C05-05",
+            "topic": "Security incident notice",
+            "text": "The supplier will notify the company of a confirmed security incident affecting customer data within 48 hours of discovery."
+          }
+        ]
+      },
+      "expected": {
+        "disposition": "escalate",
+        "requires_escalation": true,
+        "findings": [
+          {
+            "finding_id": "C05-F01",
+            "issue_type": "policy_source_conflict",
+            "severity": "high",
+            "expected_action": "escalate",
+            "contract_clause_ids": [
+              "C05-01",
+              "C05-02"
+            ],
+            "policy_clause_ids": [
+              "STD-PAYMENT-01",
+              "FIN-DATA-PAYMENT-01"
+            ],
+            "rationale": "The standard policy permits net 45 with Procurement Manager approval, while the active finance addendum limits data vendors to net 30 and does not explain whether the exception remains valid. Surface both sources and ask a policy owner to resolve precedence.",
+            "evidence_status": "confirmed_conflict"
+          }
+        ],
+        "rationale": "The system must not silently choose which active policy controls when precedence is unspecified."
+      }
+    },
+    {
+      "case_id": "C06",
+      "title": "Ambiguous incident notice wording",
+      "scenario_type": "ambiguous_wording",
+      "description": "The contract says notice will be given promptly but gives no measurable deadline.",
+      "policy_document_ids": [
+        "POL-STANDARD-1.0"
+      ],
+      "contract": {
+        "supplier": "Bluepeak Managed Services",
+        "signed_on": "2026-05-22",
+        "clauses": [
+          {
+            "clause_id": "C06-01",
+            "topic": "Security incident notice",
+            "text": "The supplier will notify the company promptly after discovering a security incident affecting company or customer data."
+          },
+          {
+            "clause_id": "C06-02",
+            "topic": "Liability cap",
+            "text": "The supplier's aggregate liability is capped at fees paid or payable during the 12 months before the event giving rise to the claim."
+          }
+        ]
+      },
+      "expected": {
+        "disposition": "escalate",
+        "requires_escalation": true,
+        "findings": [
+          {
+            "finding_id": "C06-F01",
+            "issue_type": "incident_notice_deadline_ambiguous",
+            "severity": "high",
+            "expected_action": "escalate",
+            "contract_clause_ids": [
+              "C06-01"
+            ],
+            "policy_clause_ids": [
+              "STD-SECURITY-01"
+            ],
+            "rationale": "The contract uses 'promptly' without a measurable limit. Do not assume that phrase means within 72 hours; request a specific deadline or human review.",
+            "evidence_status": "requirement_not_established"
+          }
+        ],
+        "rationale": "The contract does not establish whether it meets the explicit 72-hour policy limit."
+      }
+    },
+    {
+      "case_id": "C07",
+      "title": "Excerpt with mixed evidence states",
+      "scenario_type": "mixed_evidence_states",
+      "description": "A deliberately incomplete fictional contract excerpt contains a direct liability conflict, established personal-data processing without a DPA in the supplied excerpt, and vague incident timing.",
+      "policy_document_ids": [
+        "POL-STANDARD-1.0"
+      ],
+      "contract": {
+        "supplier": "Summit Ridge Cloud Services",
+        "signed_on": "2026-06-02",
+        "completeness": "excerpt",
+        "clauses": [
+          {
+            "clause_id": "C07-01",
+            "topic": "Liability cap",
+            "text": "The supplier’s total liability is limited to fees paid during the six months before the claim."
+          },
+          {
+            "clause_id": "C07-02",
+            "topic": "Personal data processing",
+            "text": "The supplier will process customer personal data to provide hosted cloud services."
+          },
+          {
+            "clause_id": "C07-03",
+            "topic": "Security incident notice",
+            "text": "The supplier will notify the company promptly after discovering a security incident affecting customer data."
+          }
+        ]
+      },
+      "expected": {
+        "disposition": "escalate",
+        "requires_escalation": true,
+        "findings": [
+          {
+            "finding_id": "C07-F01",
+            "issue_type": "liability_cap_below_policy_minimum",
+            "evidence_status": "confirmed_conflict",
+            "severity": "critical",
+            "expected_action": "escalate",
+            "contract_clause_ids": [
+              "C07-01"
+            ],
+            "policy_clause_ids": [
+              "STD-LIABILITY-01"
+            ],
+            "rationale": "Six months is below the mandatory 12-month minimum."
+          },
+          {
+            "finding_id": "C07-F02",
+            "issue_type": "required_data_addendum_not_found",
+            "evidence_status": "missing_from_supplied_text",
+            "severity": "high",
+            "expected_action": "escalate",
+            "contract_clause_ids": [
+              "C07-02"
+            ],
+            "policy_clause_ids": [
+              "STD-DPA-01"
+            ],
+            "rationale": "Personal-data processing is explicit, while the DPA is not found in the supplied excerpt. Do not claim absence from the full contract."
+          },
+          {
+            "finding_id": "C07-F03",
+            "issue_type": "incident_notice_deadline_ambiguous",
+            "evidence_status": "requirement_not_established",
+            "severity": "high",
+            "expected_action": "escalate",
+            "contract_clause_ids": [
+              "C07-03"
+            ],
+            "policy_clause_ids": [
+              "STD-SECURITY-01"
+            ],
+            "rationale": "Promptly has no measurable deadline, so compliance with 72 hours is not established."
+          }
+        ],
+        "rationale": "Test case for all three evidence statuses; contract input is explicitly an excerpt and final decision remains with a human."
+      }
+    }
+  ]
+}

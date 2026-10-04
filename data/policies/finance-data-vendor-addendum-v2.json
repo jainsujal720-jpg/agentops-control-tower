@@ -1,0 +1,23 @@
+{
+  "document_id": "POL-FINANCE-DATA-2.0",
+  "title": "Finance Data-Vendor Payment Addendum",
+  "version": "2.0",
+  "owner": "Finance",
+  "status": "active",
+  "effective_date": "2026-04-01",
+  "precedence": "unspecified",
+  "clauses": [
+    {
+      "clause_id": "FIN-DATA-PAYMENT-01",
+      "topic": "Payment terms for data vendors",
+      "severity": "high",
+      "text": "For suppliers that process customer personal data, invoice payment must be due no later than 30 days after receipt of a valid invoice. This addendum does not state whether Procurement Manager exceptions remain valid.",
+      "control": {
+        "type": "payment_terms",
+        "maximum_days": 30,
+        "applies_when": {"processes_personal_data": true},
+        "exception": null
+      }
+    }
+  ]
+}

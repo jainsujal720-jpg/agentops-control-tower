@@ -1,0 +1,49 @@
+{
+  "document_id": "POL-STANDARD-1.0",
+  "title": "Standard Procurement Policy",
+  "version": "1.0",
+  "owner": "Procurement",
+  "status": "active",
+  "effective_date": "2026-01-01",
+  "clauses": [
+    {
+      "clause_id": "STD-PAYMENT-01",
+      "topic": "Payment terms",
+      "severity": "medium",
+      "text": "Net 30 payment terms are preferred. Net 45 may be accepted only with written Procurement Manager approval before contract signature.",
+      "control": {
+        "type": "payment_terms",
+        "maximum_days": 30,
+        "exception": {"maximum_days": 45, "approval_required": "Procurement Manager"}
+      }
+    },
+    {
+      "clause_id": "STD-LIABILITY-01",
+      "topic": "Liability cap",
+      "severity": "critical",
+      "text": "The supplier's aggregate liability cap must be at least the total fees paid or payable during the 12 months before the event giving rise to the claim.",
+      "control": {"type": "liability_cap_months", "minimum_months": 12}
+    },
+    {
+      "clause_id": "STD-DPA-01",
+      "topic": "Personal data processing",
+      "severity": "high",
+      "text": "If the supplier processes customer personal data, a signed Data Processing Addendum must be included before data access begins.",
+      "control": {"type": "dpa_required_if_personal_data", "required": true}
+    },
+    {
+      "clause_id": "STD-SECURITY-01",
+      "topic": "Security incident notice",
+      "severity": "high",
+      "text": "The supplier must notify the company of a confirmed security incident affecting company or customer data within 72 hours of discovery.",
+      "control": {"type": "incident_notice_hours", "maximum_hours": 72}
+    },
+    {
+      "clause_id": "STD-RENEWAL-01",
+      "topic": "Renewal",
+      "severity": "low",
+      "text": "Initial and renewal terms may not exceed 12 months. The company must have at least 60 days' notice to opt out of automatic renewal.",
+      "control": {"type": "renewal_terms", "maximum_term_months": 12, "minimum_opt_out_notice_days": 60}
+    }
+  ]
+}
